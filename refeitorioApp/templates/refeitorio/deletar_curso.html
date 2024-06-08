@@ -1,0 +1,31 @@
+{% extends 'refeitorio/home.html' %}
+{% block conteudo %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Excluir">
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <td>Id do Curso</td>
+        <td>Nome do Curso</td>
+        <td>Editar</td>
+        <td>Excluir</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for curso in cursos %}
+    <tr>
+        <td>{{ curso.id_curso}}</td>
+        <td>{{ curso.nome_curso}}</td>
+        <td><a href="{% url 'editar_curso' curso.id_curso %}">Editar</a></td>
+        <td><a href="{% url 'deletar_curso' curso.id_curso %}">Excluir</a></td>
+    </tr>
+    {% endfor  %}
+    </tbody>
+</table>
+
+{% endblock conteudo %}
+
