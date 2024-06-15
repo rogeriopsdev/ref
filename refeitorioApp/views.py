@@ -46,3 +46,43 @@ def deletar_curso(request, id):
         return redirect('new_curso')
     return render(request, 'refeitorio/deletar_curso.html', context)
 
+#turno-----------------------------------------------------------------------------
+def new_turno(request):
+    form =TurnoForm(request.POST)
+    turnos = Turno.objects.all()
+    if request.method == "POST":
+        form =TurnoForm(request.POST, request.FILES)
+        if form.is_valid():
+            obj = form.save()
+            obj.save()
+            form=TurnoForm()
+    context ={'form':form, 'turnos':turnos}
+    return render(request,'refeitorio/turno/new_turno.html',context)
+
+
+def editar_turno(request, id):
+    turno = get_object_or_404(Turno, pk=id)
+    form =TurnoForm(instance=turno)
+    turnos = Turno.objects.all()
+    context = {'form': form, 'turnos': turnos,'turno':turno}
+    if request.method == "POST":
+        form =TurnoForm(request.POST, request.FILES, instance=turno)
+        if form.is_valid():
+            form.save()
+            return redirect('new_turno')
+        else:
+            return render(request,'refeitorio/turno/editar_turno.html', context)
+    else:
+        return render(request,'refeitorio/turno/editar_turno.html',context)
+
+
+def deletar_turno(request, id):
+    turno = get_object_or_404(Turno, pk=id)
+    form = TurnoForm(instance=turno)
+    turnos = Turno.objects.all()
+    context ={'turno':turno, 'form':form, 'turnos':turnos}
+    if request.method == "POST":
+        turno.delete()
+        return redirect('new_turno')
+    return render(request, 'refeitorio/turno/deletar_turno.html', context)
+
