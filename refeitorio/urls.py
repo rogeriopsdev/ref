@@ -15,9 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from refeitorioApp.views import home, new_curso,editar_curso,deletar_curso
-from refeitorioApp.views import new_turno, editar_turno, deletar_turno
+from django.urls import path,re_path
+from django.views.static import serve
+from django.conf import settings
+from django.conf.urls.static import static
+from refeitorioApp.views import home, new_curso,editar_curso,deletar_curso,mostrar_aluno
+from refeitorioApp.views import new_turno, editar_turno, deletar_turno, new_aluno,editar_aluno, deletar_aluno
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +33,12 @@ urlpatterns = [
     path('new_turno/', new_turno, name='new_turno'),
     path('editar_turno/<str:id>', editar_turno, name='editar_turno'),
     path('deletar_turno/<str:id>', deletar_turno, name='deletar_turno'),
+    #aluno
+    path('new_aluno/', new_aluno, name='new_aluno'),
+    path('mostrar_aluno/', mostrar_aluno, name='mostrar_aluno'),
+    path('editar_aluno/<str:id>', editar_aluno, name='editar_aluno'),
+    path('deletar_aluno/<str:id>', deletar_aluno, name='deletar_aluno'),
+
+    re_path(r'^img/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

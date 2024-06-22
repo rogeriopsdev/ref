@@ -1,3 +1,4 @@
+from PIL import Image
 from django.db import models
 
 # Create your models here.
@@ -27,6 +28,20 @@ class Aluno(models.Model):
     #curso_aluno =models.CharField(max_length=255,null=False, blank=False)
     #turno_aluno =models.CharField(max_length=255,null=False, blank=False)
     cpf_aluno =models.CharField(max_length=255,null=False, blank=False)
+    foto_aluno = models.ImageField(blank=True, null=False)
+
+    def save(self):
+        super().save()
+        im = Image.open(self.foto_aluno.path)
+        novo_tamanho = (40, 40)
+        im.thumbnail(novo_tamanho)
+        im.save(self.foto_aluno.path)
+
+    def foto_url(self):
+        if self.foto_aluno and hasattr(self.foto_aluno, 'url'):
+            return self.foto_aluno.url
+        else:
+            return self.nome_aluno
 
     def __str__(self):
         return self.nome_aluno

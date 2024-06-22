@@ -16,7 +16,7 @@ class MatriculaForm(forms.ModelForm):
 class AlunoForm(forms.ModelForm):
     class Meta:
         model = Aluno
-        fields = ['nome_aluno','cpf_aluno']
+        fields = ['nome_aluno','cpf_aluno','foto_aluno']
 
 
 class AcessoForm(forms.ModelForm):

@@ -86,3 +86,49 @@ def deletar_turno(request, id):
         return redirect('new_turno')
     return render(request, 'refeitorio/turno/deletar_turno.html', context)
 
+#aluno
+
+def new_aluno(request):
+    form =AlunoForm(request.POST)
+    alunos = Aluno.objects.all()
+    if request.method == "POST":
+        form =AlunoForm(request.POST, request.FILES)
+        if form.is_valid():
+            obj = form.save()
+            obj.save()
+            form=AlunoForm()
+    context ={'form':form, 'alunos':alunos}
+    return render(request,'refeitorio/aluno/new_aluno.html',context)
+
+
+def editar_aluno(request, id):
+    aluno = get_object_or_404(Aluno, pk=id)
+    form =AlunoForm(instance=aluno)
+    alunos = Aluno.objects.all()
+    context = {'form': form, 'alunos': alunos,'aluno':aluno}
+    if request.method == "POST":
+        form =AlunoForm(request.POST, request.FILES, instance=aluno)
+        if form.is_valid():
+            form.save()
+            return redirect('new_aluno')
+        else:
+            return render(request,'refeitorio/aluno/editar_aluno.html', context)
+    else:
+        return render(request,'refeitorio/aluno/editar_aluno.html',context)
+
+
+def deletar_aluno(request, id):
+    aluno = get_object_or_404(Aluno, pk=id)
+    form = AlunoForm(instance=aluno)
+    alunos = Aluno.objects.all()
+    context ={'aluno':aluno, 'form':form, 'alunos':alunos}
+    if request.method == "POST":
+        aluno.delete()
+        return redirect('new_aluno')
+    return render(request, 'refeitorio/aluno/deletar_aluno.html', context)
+
+
+def mostrar_aluno(request):
+    alunos = Aluno.objects.all()
+    context = {'alunos':alunos}
+    return render(request, 'refeitorio/aluno/mostrar_aluno.html', context)
