@@ -29,6 +29,9 @@ class Aluno(models.Model):
     #turno_aluno =models.CharField(max_length=255,null=False, blank=False)
     cpf_aluno =models.CharField(max_length=255,null=False, blank=False)
     foto_aluno = models.ImageField(blank=True, null=False)
+    cafe_aluno = models.BooleanField(default=False)
+    almoco_aluno = models.BooleanField(default=False)
+    janta_aluno = models.BooleanField(default=False)
 
     def save(self):
         super().save()

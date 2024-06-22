@@ -16,7 +16,10 @@ class MatriculaForm(forms.ModelForm):
 class AlunoForm(forms.ModelForm):
     class Meta:
         model = Aluno
-        fields = ['nome_aluno','cpf_aluno','foto_aluno']
+        fields = ['nome_aluno','cpf_aluno','foto_aluno','cafe_aluno','almoco_aluno','janta_aluno']
+        cafe_aluno = forms.BooleanField(label="café", required=False)
+        almoco_aluno = forms.BooleanField(label="almoço", required=False)
+        janta_aluno = forms.BooleanField(label="janta", required=False)
 
 
 class AcessoForm(forms.ModelForm):
